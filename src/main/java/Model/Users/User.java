@@ -1,6 +1,7 @@
 package Model.Users;
 
 import Exchange.Constants;
+import Exchange.Exchange;
 import Exchange.Transaction.Transaction;
 import Exchange.Transaction.Transaction_type;
 import Model.NFT.NFT;
@@ -12,13 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    protected User exchange;
     private String name;
     private Wallet wallet;
     private List<NFT> holdings;
 
-    public User(String name, double initial_money) {
+
+    public User(User exchange, String name, double initial_money) {
         this.wallet = new Wallet(initial_money);
         this.name = name;
+        this.exchange = exchange;
         this.holdings = new ArrayList<>();
     }
 
@@ -58,7 +62,7 @@ public class User {
         artist.getWallet().addMoney(nft.getCurrent_selling_price() * nft.getRoyalty());
         nft.getOwner().getWallet().addMoney(buying_price);
         nft.getOwner().getWallet().deduceMoney(commission);
-        //System.out.println(artist.getWallet().checkBalance());
+        exchange.getWallet().addMoney(2 * commission);
 
         nft.setOwner(this);
         nft.set_nft_state(NFT_State.BOUGHT);

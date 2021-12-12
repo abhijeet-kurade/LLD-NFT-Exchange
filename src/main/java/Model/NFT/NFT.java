@@ -9,24 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NFT {
-    int nft_id;
-    User created_by;
-    User owner;
-    LocalDate creation_date;
-    String artwork;
-    double royalty;
-    NFT_State state_of_nft;
-    double current_selling_price;
-    List<Transaction> transactions;
+    private int nft_id;
+    private User created_by;
+    private User owner;
+    private LocalDate creation_date;
+    private String artwork;
+    private double royalty;
+    private NFT_State state_of_nft;
+    private double current_selling_price;
+    private List<Transaction> transactions;
 
     public NFT(User created_by, LocalDate creation_date, String artwork, double royalty, User owner) {
         int ids = GET_NFT_ID.getInstance().getNextNFTID();
         this.nft_id = ids;
         this.created_by = created_by;
+        this.owner = owner;
         this.creation_date = creation_date;
         this.artwork = artwork;
         this.royalty = royalty;
-        this.owner = owner;
         this.state_of_nft = NFT_State.CREATED;
         this.current_selling_price = 0;
         this.transactions = new ArrayList<>();
@@ -36,12 +36,12 @@ public class NFT {
         this.owner = owner;
     }
 
-    public User getCreated_by() {
-        return created_by;
-    }
-
     public int getNft_id() {
         return nft_id;
+    }
+
+    public User getCreated_by() {
+        return created_by;
     }
 
     public LocalDate getCreation_date() {

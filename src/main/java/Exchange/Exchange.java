@@ -5,11 +5,14 @@ import Model.NFT.NFT;
 import Model.NFT.NFT_State;
 import Model.Users.Artist;
 import Model.Users.User;
+import Model.Users.Wallet;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class Exchange {
+
+    User exchange;
 
     HashMap<String, User> users;  // name -> user
     HashMap<Integer, NFT> allNFTs; // id -> nft
@@ -17,18 +20,22 @@ public class Exchange {
     public Exchange() {
         this.users = new HashMap<>();
         this.allNFTs = new HashMap<>();
+        this.exchange = new User(null, "Exchange", 0);
+        this.users.put(this.exchange.getName(), this.exchange);
     }
+
+
 
     public Artist create_artist(String name, double initial_money){
         if(this.users.get(name) != null) return null;
-        Artist artist = new Artist(name, initial_money);
+        Artist artist = new Artist(this.exchange, name, initial_money);
         this.users.put(artist.getName(), artist);
         return artist;
     }
 
     public User create_user(String name, double initial_money){
         if(this.users.get(name) != null) return null;
-        User user = new User(name, initial_money);
+        User user = new User(this.exchange, name, initial_money);
         this.users.put(user.getName(), user);
         return user;
     }
